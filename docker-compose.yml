@@ -1,0 +1,17 @@
+services:
+  launcher:
+    build: .                     # 告訴 Compose 在當前目錄找 Dockerfile
+    pull_policy: never           # 新增這行：強制規定「絕對不要」去網路下載
+    image: my-kubespray:v2.30.0  # 使用您剛剛自己 Build 出來的映像檔
+    container_name: kubespray-launcher
+    # 開啟互動模式 (等同於 docker run 的 -it)
+    stdin_open: true
+    tty: true
+    # 進入容器後的預設目錄
+    working_dir: /kubespray
+    # 掛載本機檔案與金鑰
+    volumes:
+      - ${HOME}/.ssh/id_rsa:/root/.ssh/id_rsa:ro  # ro 代表唯讀 (Read-only)，保護您的私鑰
+      - .:/kubespray                              # 將當前目錄掛載進去
+    # 預設執行的指令
+    command: bash
