@@ -9,9 +9,15 @@ services:
     tty: true
     # 進入容器後的預設目錄
     working_dir: /kubespray
+    # 🔑 新增 Ports 區塊：將實體機的 127.0.0.1:8080 綁定到容器內的 8080
+    ports:
+      - "0.0.0.0:8080:8080"
     # 掛載本機檔案與金鑰
     volumes:
-      - ${HOME}/.ssh/id_rsa:/root/.ssh/id_rsa:ro  # ro 代表唯讀 (Read-only)，保護您的私鑰
+      # 🔑 捨棄整個目錄掛載，改為精準掛載實體檔案
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro
+      - ~/.ssh/k8s_multipass_rsa:/root/.ssh/k8s_multipass_rsa:ro
       - .:/kubespray                              # 將當前目錄掛載進去
+      - /var/run/docker.sock:/var/run/docker.sock # 🔑 新增這行：把實體機的 Docker 引擎控制權掛載進來
     # 預設執行的指令
     command: bash

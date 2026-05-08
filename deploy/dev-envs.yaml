@@ -1,0 +1,144 @@
+# --- User 1 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: dev-user1 }
+spec:
+  replicas: 1
+  selector: { matchLabels: { user: user1 } }
+  template:
+    metadata: { labels: { user: user1 } }
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:24.04
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "apt update && apt install -y openssh-server sudo && mkdir -p /run/sshd && echo 'root:password123' | chpasswd && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && /usr/sbin/sshd -D" ]
+        ports:
+        - containerPort: 22
+---
+apiVersion: v1
+kind: Service
+metadata: { name: ssh-user1 }
+spec:
+  type: NodePort
+  selector: { user: user1 }
+  ports:
+    - port: 22
+      targetPort: 22
+      nodePort: 32201
+# --- User 2 ---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: dev-user2 }
+spec:
+  replicas: 1
+  selector: { matchLabels: { user: user2 } }
+  template:
+    metadata: { labels: { user: user2 } }
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:24.04
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "apt update && apt install -y openssh-server sudo && mkdir -p /run/sshd && echo 'root:password123' | chpasswd && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && /usr/sbin/sshd -D" ]
+        ports:
+        - containerPort: 22
+---
+apiVersion: v1
+kind: Service
+metadata: { name: ssh-user2 }
+spec:
+  type: NodePort
+  selector: { user: user2 }
+  ports:
+    - port: 22
+      targetPort: 22
+      nodePort: 32202
+# --- User 3 ---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: dev-user3 }
+spec:
+  replicas: 1
+  selector: { matchLabels: { user: user3 } }
+  template:
+    metadata: { labels: { user: user3 } }
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:24.04
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "apt update && apt install -y openssh-server sudo && mkdir -p /run/sshd && echo 'root:password123' | chpasswd && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && /usr/sbin/sshd -D" ]
+        ports:
+        - containerPort: 22
+---
+apiVersion: v1
+kind: Service
+metadata: { name: ssh-user3 }
+spec:
+  type: NodePort
+  selector: { user: user3 }
+  ports:
+    - port: 22
+      targetPort: 22
+      nodePort: 32203
+# --- User 4 ---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: dev-user4 }
+spec:
+  replicas: 1
+  selector: { matchLabels: { user: user4 } }
+  template:
+    metadata: { labels: { user: user4 } }
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:24.04
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "apt update && apt install -y openssh-server sudo && mkdir -p /run/sshd && echo 'root:password123' | chpasswd && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && /usr/sbin/sshd -D" ]
+        ports:
+        - containerPort: 22
+---
+apiVersion: v1
+kind: Service
+metadata: { name: ssh-user4 }
+spec:
+  type: NodePort
+  selector: { user: user4 }
+  ports:
+    - port: 22
+      targetPort: 22
+      nodePort: 32204
+# --- User 5 ---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: dev-user5 }
+spec:
+  replicas: 1
+  selector: { matchLabels: { user: user5 } }
+  template:
+    metadata: { labels: { user: user5 } }
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:24.04
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "apt update && apt install -y openssh-server sudo && mkdir -p /run/sshd && echo 'root:password123' | chpasswd && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && /usr/sbin/sshd -D" ]
+        ports:
+        - containerPort: 22
+---
+apiVersion: v1
+kind: Service
+metadata: { name: ssh-user5 }
+spec:
+  type: NodePort
+  selector: { user: user5 }
+  ports:
+    - port: 22
+      targetPort: 22
+      nodePort: 32205

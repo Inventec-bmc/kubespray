@@ -1,0 +1,11 @@
+network:
+  version: 2
+  ethernets:
+    ens4:  # ⚠️ 這裡已根據 ip addr 的結果改為 ens4
+      addresses:
+        - 192.168.169.170/24
+      # routes:
+        # - to: default
+          # via: 192.168.169.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]

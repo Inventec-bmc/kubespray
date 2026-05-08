@@ -1,0 +1,20 @@
+- name: 為 ubuntu 使用者配置 K8s 最高權限
+  hosts: kube_control_plane
+  become: yes
+  tasks:
+    - name: 建立 .kube 隱藏資料夾
+      file:
+        path: /home/ubuntu/.kube
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+    - name: 將 root 的 admin.conf 複製給 ubuntu
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/ubuntu/.kube/config
+        remote_src: yes
+        owner: ubuntu
+        group: ubuntu
+        mode: '0600'

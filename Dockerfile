@@ -23,9 +23,16 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     sshpass \
     vim \
     rsync \
-    openssh-client \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /var/log/*
+    openssh-client
+
+RUN apt-get install -yq --no-install-recommends \
+    net-tools \
+    iputils-ping
+
+RUN apt-get install -yq --no-install-recommends \
+    docker.io
+    # && apt-get clean \
+    # && rm -rf /var/lib/apt/lists/* /var/log/*
 
 RUN --mount=type=bind,source=requirements.txt,target=requirements.txt \
     --mount=type=cache,sharing=locked,id=pipcache,mode=0777,target=/root/.cache/pip \
@@ -34,10 +41,13 @@ RUN --mount=type=bind,source=requirements.txt,target=requirements.txt \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN OS_ARCHITECTURE=$(dpkg --print-architecture) \
-    && curl -L "https://dl.k8s.io/release/v1.34.3/bin/linux/${OS_ARCHITECTURE}/kubectl" -o /usr/local/bin/kubectl \
-    && echo "$(curl -L "https://dl.k8s.io/release/v1.34.3/bin/linux/${OS_ARCHITECTURE}/kubectl.sha256")" /usr/local/bin/kubectl | sha256sum --check \
-    && chmod a+x /usr/local/bin/kubectl
+# 下載 kubectl 以及 kind (強制指定 amd64 架構避免變數解析錯誤)
+# RUN OS_ARCHITECTURE=$(dpkg --print-architecture) \
+#     && curl -L "https://dl.k8s.io/release/v1.34.3/bin/linux/${OS_ARCHITECTURE}/kubectl" -o /usr/local/bin/kubectl \
+#     && echo "$(curl -L "https://dl.k8s.io/release/v1.34.3/bin/linux/${OS_ARCHITECTURE}/kubectl.sha256")" /usr/local/bin/kubectl | sha256sum --check \
+#     && chmod a+x /usr/local/bin/kubectl \
+#     && curl -Lo /usr/local/bin/kind "https://kind.sigs.k8s.io/dl/v0.22.0/kind-linux-amd64" \
+#     && chmod a+x /usr/local/bin/kind
 
 COPY *.yml ./
 COPY *.cfg ./

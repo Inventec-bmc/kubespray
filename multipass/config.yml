@@ -1,0 +1,21 @@
+# K8s 巨型節點硬體與網路配置
+vm_name: k8s-node1
+# image: "24.04"
+image: "/home/valentine/kubernet/kubespray/multipass/image/noble-server-cloudimg-amd64.img"
+
+# 硬體規格 (為了支撐 6 個沉重的 24.04 容器)
+cpus: 16
+memory: 96G
+disk: 1024G
+
+# --- 網路掛載設定 ---
+# ❌ 錯誤：不能直接填實體網卡 (會導致 D-Bus 崩潰)
+# bridge_interface: "eno16895np0"  
+
+# ✅ 正確：填寫您在宿主機 Netplan 建立的橋接器名稱 (綁定在 eno16905np1 上的那個)
+bridge_interface: "br0"
+# 專門設定 IP 的獨立 yml 檔案路徑
+cloud_init_file: "./network/network-config.yml"
+
+# 驗證
+ssh_pub_key_path: ~/.ssh/k8s_multipass_rsa.pub
