@@ -42,6 +42,18 @@ docker_rpm_keepcache: 1
 #   - mirror.registry.io
 #   - 172.19.16.11
 
+# valenteine 2026-05-08 ++
+docker_insecure_registries:
+  # 1. 叢集內部存取的網域 (對應你 addons.yml 裡的設定)
+  - "registry.kube-system.svc.cluster.local:5000"
+  
+  # 2. 宿主機 (你的實體電腦) 存取位址
+  # 如果你之後要在自己的電腦上 build image 並 push 到 Multipass 裡的 Registry，
+  # 建議提早把 Multipass 虛擬機的 IP 與 NodePort 加進來。
+  # (請將 IP 替換成你透過 `multipass info <虛擬機名稱>` 查到的實際 IP)
+  - "192.168.169.170:5000" # 這裡直接填入虛擬機的 Bridge IP
+# valenteine 2026-05-08 --
+
 ## Add other registry,example China registry mirror.
 # docker_registry_mirrors:
 #   - https://registry.docker-cn.com

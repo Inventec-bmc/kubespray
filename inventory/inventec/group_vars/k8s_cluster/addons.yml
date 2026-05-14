@@ -7,10 +7,23 @@
 helm_enabled: false
 
 # Registry deployment
-registry_enabled: false
-# registry_namespace: kube-system
+# valenteine 2026-05-08 ++
+# open enable docker registry
+# registry_enabled: false
+registry_enabled: true
+registry_namespace: kube-system
+# valenteine 2026-05-08 --
 # registry_storage_class: ""
 # registry_disk_size: "10Gi"
+
+# valenteine 2026-05-11 ++
+# registry_web_ui: "joxit/docker-registry-ui"
+# ===== 新增這兩行來固定 NodePort =====
+registry_service_type: "NodePort"
+registry_service_nodeport: "25000"
+registry_storage_class: "local-path" # 或是您叢集中有的 storage class
+registry_disk_size: "50Gi"
+# valenteine 2026-05-11 --
 
 # Metrics Server deployment
 metrics_server_enabled: false

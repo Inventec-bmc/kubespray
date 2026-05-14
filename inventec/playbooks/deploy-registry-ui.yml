@@ -1,0 +1,17 @@
+---
+- name: Deploy Inventec Customer UI 
+  hosts: kube_control_plane[0]
+  become: yes
+  tasks:
+    - name: Create Registry UI Web
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'files/registry-ui-k8s.yml') }}"
+        state: present
+
+    # - name: Initial Ubuntu 24.04 and push to Registry
+    #   ansible.builtin.shell: |
+    #     docker pull ubuntu:24.04
+    #     docker tag ubuntu:24.04 localhost:{{ registry_service_nodeport }}/my-ubuntu:24.04
+    #     docker push localhost:{{ registry_service_nodeport }}/my-ubuntu:24.04
+    #   register: push_out
+    #   changed_when: "'Pushed' in push_out.stdout"

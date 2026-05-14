@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  registry:
+    image: registry:2
+    container_name: registry-server
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      # 掛載映像檔資料
+      - ./registry-data:/var/lib/registry
+      # 【關鍵】掛載我們剛剛寫好的完美設定檔
+      - ./config.yml:/etc/docker/registry/config.yml

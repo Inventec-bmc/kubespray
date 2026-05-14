@@ -56,6 +56,14 @@ spec:
             - name: REGISTRY_HTTP_TLS_KEY
               value: /etc/ssl/docker/tls.key
 {% endif %}
+            - name: REGISTRY_HTTP_HEADERS_ACCESS__CONTROL__ALLOW__ORIGIN
+              value: "['http://localhost:8080']"
+            - name: REGISTRY_HTTP_HEADERS_ACCESS__CONTROL__ALLOW__METHODS
+              value: "['HEAD', 'GET', 'OPTIONS', 'DELETE']"
+            - name: REGISTRY_HTTP_HEADERS_ACCESS__CONTROL__ALLOW__HEADERS
+              value: "['Authorization', 'Accept', 'Cache-Control']"
+            - name: REGISTRY_HTTP_HEADERS_ACCESS__CONTROL__EXPOSE__HEADERS
+              value: "['Docker-Content-Digest']"
           volumeMounts:
             - name: registry-pvc
               mountPath: /var/lib/registry

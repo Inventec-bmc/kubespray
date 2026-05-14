@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  registry-browser:
+    image: klausmeyer/docker-registry-browser
+    container_name: registry-browser
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      # 【最關鍵的設定】請把這裡換成您「獨立 Registry」的真實 IP 或網址
+      # 例如: http://192.168.169.170:5000 或 http://registry.my-domain.com
+      - DOCKER_REGISTRY_URL=http://192.168.169.170:5000
+      
+      # 這是這款 UI 內部加密用的金鑰，隨便設定一串英數字即可，不用去記它
+      - SECRET_KEY_BASE=my_super_secret_key_for_ui_12345

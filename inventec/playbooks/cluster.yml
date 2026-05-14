@@ -1,0 +1,3 @@
+---
+- name: Deploy Inventec Customer Registry UI
+  ansible.builtin.import_playbook: deploy-registry-ui.yml

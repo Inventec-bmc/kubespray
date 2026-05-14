@@ -1,3 +1,5 @@
 ---
 - name: Install Kubernetes
   ansible.builtin.import_playbook: playbooks/cluster.yml
+# - name: Deploy Customer Container
+#   ansible.builtin.import_playbook: inventec/playbooks/cluster.yml
